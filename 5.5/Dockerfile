@@ -44,9 +44,28 @@ RUN mkdir -p /etc/mysql/conf.d \
 		echo '!includedir /etc/mysql/conf.d/'; \
 	} > /etc/mysql/my.cnf \
 	&& { \
-		echo '[mysqld]'; \
-		echo 'user = mysql'; \
-		echo 'datadir = /var/lib/mysql'; \
+                echo '[mysqld]'; \
+                echo 'user = mysql'; \
+                echo 'datadir = /var/lib/mysql'; \
+                echo 'innodb_thread_concurrency = 16'; \
+                echo 'character-set-server=utf8'; \
+                echo 'skip-external-locking'; \
+                echo 'default-storage-engine=InnoDB'; \
+                echo 'lower_case_table_names = 1'; \
+                echo 'log_bin_trust_function_creators = 1'; \
+                echo 'key_buffer              = 64M'; \
+                echo 'max_allowed_packet      = 64M'; \
+                echo 'thread_stack            = 1M'; \
+                echo 'thread_cache_size       = 32'; \
+                echo 'myisam-recover         = BACKUP'; \
+                echo 'max_connections        = 400'; \
+                echo 'thread_concurrency     = 100'; \
+                echo 'query_cache_limit       = 4M'; \
+                echo 'query_cache_size        = 64M'; \
+                echo '[mysql]'; \
+                echo 'default-character-set=utf8'; \
+                echo '[isamchk]'; \
+                echo 'key_buffer              = 16M'; \
 	} > /etc/mysql/conf.d/docker.cnf
 
 VOLUME /var/lib/mysql
